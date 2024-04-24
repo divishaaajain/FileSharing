@@ -1,0 +1,27 @@
+{
+  "name": "filesharing",
+  "version": "1.0.0",
+  "description": "App for sharing files to users",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/app.js"
+  },
+  "author": "Divisha Jain",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/bson": "^4.2.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/express-validator": "^3.0.0",
+    "@types/node": "^20.12.7"
+  }
+}
