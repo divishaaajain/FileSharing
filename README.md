@@ -37,4 +37,38 @@ User Routes:-
 - Response: A JSON object containing an array of files, each with its ID and content. The content can be either encrypted or decrypted, depending on the user's access rights.
 
 # AES Encryption
+-  The implementation below uses AES-256 in CTR (Counter) mode for encryption
+
+1. AES encryption and decryption using the 'crypto' module
+- import * as crypto from 'crypto';
+
+2.Environment Variables: The ENCRYPTION_ALGORITHM and ENCRYPTION_SECRET_KEY are used to define the encryption algorithm and secret key, respectively. These should be kept secure and not hard-coded in the source code.
+
+const algorithm: string = `${process.env.ENCRYPTION_ALGORITHM}`;
+let key: string = `${process.env.ENCRYPTION_SECRET_KEY}`;
+key = crypto.createHash('sha256').update(String(key)).digest('base64').slice(0, 32);
+
+3. Encryption (encrypt function): 
+- Generates a random initialization vector (IV) using crypto.randomBytes(16).
+- Creates a cipher using crypto.createCipheriv with the specified algorithm (ENCRYPTION_ALGORITHM), secret key (key), and IV.
+- Returns the concatenated buffer of the IV and the encrypted content (cipher.update(buffer) and cipher.final()).
+
+export const encrypt = (buffer: Buffer): Buffer => {
+    const iv: Buffer = crypto.randomBytes(16);
+    const cipher: crypto.Cipher = crypto.createCipheriv(algorithm, key, iv);
+    return Buffer.concat([iv, cipher.update(buffer), cipher.final()]) as Buffer;   
+};
+
+4. Decryption (decrypt function):
+- Extracts the IV from the beginning of the encrypted buffer.
+- Removes the IV from the encrypted buffer.
+- Creates a decipher using crypto.createDecipheriv with the same algorithm, secret key, and IV.
+- Returns the decrypted content by concatenating the result of decipher.update(encrypted) and decipher.final().
+
+export const decrypt = (encrypted: Buffer): Buffer => {
+   const iv: Buffer = encrypted.slice(0, 16);               
+   encrypted = encrypted.slice(16);                       
+   const decipher: crypto.Decipher = crypto.createDecipheriv(algorithm, key, iv);
+   return Buffer.concat([decipher.update(encrypted), decipher.final()]) as Buffer;       
+};
 
