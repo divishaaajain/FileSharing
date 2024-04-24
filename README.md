@@ -9,10 +9,10 @@ Backend system for a secure file-sharing platform that allows users to share enc
 # API endpoints and usage
 Auth Routes:-
 1. /signup :- Users can signup with a unique username
-. Method: POST
-. Path: /signup
-. Request Body: {username: unique username}
-. Response: A success message indicating that the user has registered successfully
+- Method: POST
+- Path: /signup
+- Request Body: {username: unique username}
+- Response: A success message indicating that the user has registered successfully
 
 User Routes:-
 1. /upload/:creator_id :- Users can upload files which we be stored on the server in excrypted form
